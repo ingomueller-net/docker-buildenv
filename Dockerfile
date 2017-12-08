@@ -50,6 +50,15 @@ RUN mkdir /opt/clang+llvm-4.0.0/ && \
         ln -s $PWD/$file /usr/bin/$(basename $file)-4.0; \
     done
 
+RUN mkdir /opt/clang+llvm-5.0.0/ && \
+    cd /opt/clang+llvm-5.0.0/ && \
+    wget http://releases.llvm.org/5.0.0/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04.tar.xz -O - \
+         | tar -x -I xz --strip-components=1 && \
+    for file in bin/*; \
+    do \
+        ln -s $PWD/$file /usr/bin/$(basename $file)-5.0; \
+    done
+
 RUN mkdir /opt/cmake-3.6.3/ && \
     cd /opt/cmake-3.6.3/ && \
     wget https://cmake.org/files/v3.6/cmake-3.6.3-Linux-x86_64.tar.gz -O - \
@@ -66,4 +75,31 @@ RUN mkdir /opt/cmake-3.7.2/ && \
     for file in bin/*; \
     do \
         ln -s $PWD/$file /usr/bin/$(basename $file)-3.7; \
+    done
+
+RUN mkdir /opt/cmake-3.8.2/ && \
+    cd /opt/cmake-3.8.2/ && \
+    wget https://cmake.org/files/v3.8/cmake-3.8.2-Linux-x86_64.tar.gz -O - \
+        | tar -xz --strip-components=1 && \
+    for file in bin/*; \
+    do \
+        ln -s $PWD/$file /usr/bin/$(basename $file)-3.8; \
+    done
+
+RUN mkdir /opt/cmake-3.9.6/ && \
+    cd /opt/cmake-3.9.6/ && \
+    wget https://cmake.org/files/v3.9/cmake-3.9.6-Linux-x86_64.tar.gz -O - \
+        | tar -xz --strip-components=1 && \
+    for file in bin/*; \
+    do \
+        ln -s $PWD/$file /usr/bin/$(basename $file)-3.9; \
+    done
+
+RUN mkdir /opt/cmake-3.10.6/ && \
+    cd /opt/cmake-3.10.6/ && \
+    wget https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz -O - \
+        | tar -xz --strip-components=1 && \
+    for file in bin/*; \
+    do \
+        ln -s $PWD/$file /usr/bin/$(basename $file)-3.10; \
     done
