@@ -1,3 +1,5 @@
+FROM ingomuellernet/buildenv:gold-builder-stage2 as gold-builder
+
 FROM ubuntu:xenial
 MAINTAINER Ingo Müller <ingo.mueller@inf.ethz.ch>
 
@@ -58,6 +60,9 @@ RUN mkdir /opt/clang+llvm-5.0.0/ && \
     do \
         ln -s $PWD/$file /usr/bin/$(basename $file)-5.0; \
     done
+
+# Copy llvm gold plugin over from builder
+COPY --from=gold-builder /tmp/llvm-5.0.0.src/build/lib/LLVMgold.so /opt/clang+llvm-5.0.0/lib
 
 RUN mkdir /opt/cmake-3.6.3/ && \
     cd /opt/cmake-3.6.3/ && \

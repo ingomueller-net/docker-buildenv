@@ -1,0 +1,41 @@
+FROM ubuntu:xenial
+MAINTAINER Ingo Müller <ingo.mueller@inf.ethz.ch>
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        binutils-dev \
+        cmake \
+        gcc-5 \
+        g++-5 \
+        ninja-build \
+        python-minimal \
+        wget \
+        xz-utils \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN cd /tmp/ && \
+    wget http://releases.llvm.org/5.0.0/llvm-5.0.0.src.tar.xz && \
+    tar -xf llvm-5.0.0.src.tar.xz && \
+    mkdir /tmp/llvm-5.0.0.src/build && \
+    cd /tmp/llvm-5.0.0.src/build && \
+    CXX=g++-5 CC=gcc-5 cmake -G Ninja ../ \
+        -DLLVM_BINUTILS_INCDIR=/usr/include \
+        -DLLVM_TARGETS_TO_BUILD=X86 \
+        -DCMAKE_BUILD_TYPE=MinSizeRel \
+        -DLLVM_OPTIMIZED_TABLEGEN=ON && \
+    ninja lib/libLLVMDemangle.a \
+        lib/libLLVMSupport.a \
+        lib/libLLVMTableGen.a \
+        bin/llvm-tblgen \
+        lib/libLLVMCore.a \
+        lib/libLLVMIRReader.a \
+        lib/libLLVMCodeGen.a \
+        lib/libLLVMSelectionDAG.a \
+        lib/libLLVMAsmPrinter.a \
+        lib/libLLVMBinaryFormat.a \
+        lib/libLLVMGlobalISel.a \
+        lib/libLLVMBitReader.a \
+        lib/libLLVMBitWriter.a \
+        lib/libLLVMTransformUtils.a \
+        lib/libLLVMInstrumentation.a \
+        lib/libLLVMInstCombine.a 

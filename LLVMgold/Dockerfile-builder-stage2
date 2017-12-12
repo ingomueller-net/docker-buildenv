@@ -1,0 +1,5 @@
+FROM ingomuellernet/buildenv:gold-builder-stage1
+MAINTAINER Ingo Müller <ingo.mueller@inf.ethz.ch>
+
+RUN cd /tmp/llvm-5.0.0.src/build && \
+    ninja LLVMgold
