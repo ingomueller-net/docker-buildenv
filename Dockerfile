@@ -1,4 +1,5 @@
 FROM ingomuellernet/buildenv:gold-builder-stage2 as gold-builder
+FROM ingomuellernet/cppcheck as cppcheck-builder
 
 FROM ubuntu:xenial
 MAINTAINER Ingo Müller <ingo.mueller@inf.ethz.ch>
@@ -107,4 +108,11 @@ RUN mkdir /opt/cmake-3.10.6/ && \
     for file in bin/*; \
     do \
         ln -s $PWD/$file /usr/bin/$(basename $file)-3.10; \
+    done
+
+# Copy cppcheck over from builder
+COPY --from=cppcheck-builder /opt/ /opt/
+
+RUN for bin in /opt/cppcheck-1.*/bin/cppcheck-1.*; do \
+        ln -s $bin /usr/bin/; \
     done
