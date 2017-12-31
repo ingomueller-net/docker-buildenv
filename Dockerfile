@@ -31,6 +31,7 @@ RUN apt-get update && \
         gcc-5 \
         g++-5 \
         git \
+        libboost-all-dev \
         wget \
         xz-utils \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
