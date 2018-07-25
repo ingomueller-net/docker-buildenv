@@ -32,6 +32,10 @@ RUN apt-get update && \
         g++-5 \
         git \
         libboost-all-dev \
+        libiomp-dev \
+        libiomp5 \
+        libomp-dev \
+        libomp5 \
         wget \
         xz-utils \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
