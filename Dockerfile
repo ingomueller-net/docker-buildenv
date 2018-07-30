@@ -1,4 +1,5 @@
 FROM ingomuellernet/buildenv:gold-builder-stage2 as gold-builder
+FROM ingomuellernet/boost as boost-builder
 FROM ingomuellernet/cppcheck as cppcheck-builder
 
 FROM ubuntu:xenial
@@ -31,7 +32,6 @@ RUN apt-get update && \
         gcc-5 \
         g++-5 \
         git \
-        libboost-all-dev \
         libiomp-dev \
         libiomp5 \
         libomp-dev \
@@ -120,4 +120,14 @@ COPY --from=cppcheck-builder /opt/ /opt/
 
 RUN for bin in /opt/cppcheck-1.*/bin/cppcheck-1.*; do \
         ln -s $bin /usr/bin/; \
+    done
+
+# Copy boost over from builder
+COPY --from=boost-builder /opt/ /opt/
+
+RUN for file in /opt/boost-1.*/include/*; do \
+        ln -s $file /usr/include/; \
+    done && \
+    for file in /opt/boost-1.*/lib/*; do \
+        ln -s $file /usr/lib/; \
     done
