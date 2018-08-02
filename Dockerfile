@@ -65,7 +65,8 @@ RUN mkdir /opt/clang+llvm-5.0.0/ && \
     for file in bin/*; \
     do \
         ln -s $PWD/$file /usr/bin/$(basename $file)-5.0; \
-    done
+    done && \
+    cp /opt/clang+llvm-5.0.0/lib/libomp.so /opt/clang+llvm-5.0.0/lib/libomp.so.5
 
 # Copy llvm gold plugin over from builder
 COPY --from=gold-builder /tmp/llvm-5.0.0.src/build/lib/LLVMgold.so /opt/clang+llvm-5.0.0/lib
